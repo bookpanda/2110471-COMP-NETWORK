@@ -19,6 +19,11 @@ show ip interface brief
 
 show interfaces
 show interfaces fastEthernet 0/5
+
+# show IP routes of interfaces (router only)
+show ip route
+
+show ip nat translations
 ```
 
 # Tips
