@@ -10,13 +10,15 @@ copy running-config startup-config
 
 ## Show
 ```bash
+# show vlans and their ports
+show vlan
+
+show ip interface
+# show all interfaces with IP (if vlan has IP, it will show up here)
 show ip interface brief
 
-```
-## ?
-```bash
-int vlan ?
-show ip ?
+show interfaces
+show interfaces fastEthernet 0/5
 ```
 
 # Tips
@@ -27,3 +29,5 @@ show ip ?
 
 # Keys
 - ctrl+shift+6: interrupt e.g. Translating "ip"...domain server
+- ?: help
+- tab: auto-complete
