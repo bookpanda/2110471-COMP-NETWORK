@@ -6,6 +6,8 @@ no shutdown
 # save your configuration, ctrl+s
 copy running-config startup-config
 
+# set clock rate on DCE side
+clock rate 128000
 ```
 
 ## Show
@@ -24,6 +26,7 @@ show interfaces fastEthernet 0/5
 show ip route
 
 show ip nat translations
+show ip nat statistics
 ```
 
 # Tips
