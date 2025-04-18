@@ -13,6 +13,9 @@ ping 192.168.1.11
 ## Show
 
 ```bash
+# display IOS version
+show version
+
 # show vlans and their ports
 show vlan
 
@@ -30,14 +33,7 @@ show ip nat translations
 show ip nat statistics
 ```
 
-## PC
-
-```bash
-# show ip configuration
-ipconfig /all
-```
-
-## Switch
+## Setup
 
 ```bash
 enable
@@ -58,6 +54,7 @@ line vty 0 4
 password cisco
 login
 end
+# now PC can telnet 192.168.1.2 (vlan ip of switch)
 
 # banner
 banner motd #
@@ -71,6 +68,13 @@ exit
 # save your configuration
 copy running-config startup-config
 show running-config
+```
+
+## PC
+
+```bash
+# show ip configuration
+ipconfig /all
 ```
 
 ## Router
@@ -99,6 +103,9 @@ show running-config
 
 -   Copper straight: different devices (switch to router, PC to switch)
 -   Copper crossover: same devices (switch to switch, router to router)
+-   connecting remote access
+    -   wire console cable from PC's RS 232 to router's console port
+    -   enter PC's terminal, can now access switch's terminal
 
 ## Devices
 
