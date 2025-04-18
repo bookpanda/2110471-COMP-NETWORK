@@ -39,3 +39,13 @@ show ip nat statistics
 - ctrl+shift+6: interrupt e.g. Translating "ip"...domain server
 - ?: help
 - tab: auto-complete
+
+# Hardware
+## Wiring
+- Copper straight: different devices (switch to router, PC to switch)
+- Copper crossover: same devices (switch to switch, router to router)
+## Devices
+### Switch
+- doesn't have power switch
+### PC
+- Desktop >> IP Configuration >> IP address, subnet mask, default gateway
