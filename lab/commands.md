@@ -71,7 +71,7 @@ ip address 192.168.1.2 255.255.255.0
 no shutdown
 exit
 
-# save your configuration
+# save your configuration (reload won't cause loss of config)
 copy running-config startup-config
 show running-config
 ```
@@ -86,7 +86,17 @@ ipconfig /all
 ## Router
 
 ```bash
+clock set 17:00:00 18 Feb 2013
+```
 
+### Interface
+
+```bash
+int g0/0
+description Connection to PC-B
+# set interface's IP address and subnet mask
+ip address 192.168.0.1 255.255.255.0
+no shutdown
 ```
 
 # Tips
