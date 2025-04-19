@@ -101,11 +101,52 @@ no shutdown
 
 ### Serial DCE
 
+-   even after DCE ip config, PC cannot ping stuff cross DCE (the router doesn't have routes to distant networks)
+
 ```bash
 int s0/0/0
 ip address 10.1.1.2 255.255.255.252
 clock rate 128000 # do only on DCE side
 no shutdown
+```
+
+### Loopback
+
+```bash
+interface Loopback0
+ip address 198.133.219.1 255.255.255.0
+```
+
+### Static Route
+
+```bash
+# recursive static route on R1
+# dest network, subnet mask, next hop ip (dest router side)
+ip route 192.168.1.0 255.255.255.0 10.1.1.2
+# show ip route: ip route 192.168.1.0/24 [1/0] via 10.1.1.2
+# PC A still cannot ping PC C (R3 does not have return route)
+# recursive static route on R3
+ip route 192.168.0.0 255.255.255.0 10.1.1.1
+# now PC A can ping PC C
+
+# directly connected static route on R3
+# dest network, subnet mask, interface (R3 router side)
+ip route 192.168.0.0 255.255.255.0 s0/0/0
+# show ip route: 192.168.0.0/24 is directly connected, Serial0/0/0
+no ip route 192.168.0.0 255.255.255.0 s0/0/0
+# A static route cannot be "directly connected" unless the destination network is on that interface
+
+# these 2 routes are equivalent
+ip route 198.133.219.0 255.255.255.0 S0/0/1 # this router side
+ip route 198.133.219.0 255.255.255.0 10.1.1.2 # dest router side
+```
+
+### Default Route
+
+```bash
+ip route 0.0.0.0 0.0.0.0 s0/0/1
+# gateway of last resort is 0.0.0.0 to 0.0.0.0
+
 ```
 
 # Tips
