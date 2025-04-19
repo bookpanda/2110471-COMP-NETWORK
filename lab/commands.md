@@ -64,7 +64,7 @@ end
 service password-encryption
 
 # banner
-banner motd #Unauthorized access prohibited#
+banner motd #Unauthorized access is prohibited#
 
 interface vlan1
 ip address 192.168.1.2 255.255.255.0
@@ -146,6 +146,29 @@ ip route 198.133.219.0 255.255.255.0 10.1.1.2 # dest router side
 ```bash
 ip route 0.0.0.0 0.0.0.0 s0/0/1
 # gateway of last resort is 0.0.0.0 to 0.0.0.0
+
+```
+
+### OSPF
+
+```bash
+# enable OSPF on router
+router ospf 1
+# enable OSPF in each interface e.g. first one 192.168.1.0/24 subnet
+network 192.168.1.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.3 area 0
+network 192.168.13.0 0.0.0.3 area 0
+# do for all routers
+
+show ip ospf neighbor
+# show subnets that are not directly connected to the router
+show ip route ospf
+# verify OSPF settings
+show ip protocols
+# verify OSPF process
+show ip ospf
+# detail + cost
+show ip ospf interface
 
 ```
 
