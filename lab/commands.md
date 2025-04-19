@@ -161,7 +161,7 @@ network 192.168.13.0 0.0.0.3 area 0
 # do for all routers
 
 show ip ospf neighbor
-# show subnets that are not directly connected to the router
+# show subnets that are not directly connected to the router + cost
 show ip route ospf
 # verify OSPF settings
 show ip protocols
@@ -212,6 +212,28 @@ passive-interface default # all interfaces passive
 # R1: when R2 dead timer expires, R1 will remove R2 from its OSPF neighbor table
 # R1, R3 no longer have a route passing through R2 subnet
 show ip ospf neighbor
+
+# R2: open back one interface, R1, R3 can only go to R2 through that interface
+router ospf 1
+no passive-interface s0/0/0
+```
+
+## Change OSPF metrics
+
+```bash
+# change OSPF cost
+router ospf 1
+# cost = 10000 / speed in Mbps e.g. 1 Gbps cost = 10, default is 100
+auto-cost reference-bandwidth 10000
+
+# change interface bandwidth
+interface s0/0/0
+bandwidth 128
+show ip route ospf # some best route will change
+
+# change ospf cost directly
+interface s0/0/1
+ip ospf cost 1565
 ```
 
 # Tips
