@@ -89,13 +89,22 @@ ipconfig /all
 clock set 17:00:00 18 Feb 2013
 ```
 
-### Interface
+### GigabitEthernet
 
 ```bash
 int g0/0
 description Connection to PC-B
 # set interface's IP address and subnet mask
 ip address 192.168.0.1 255.255.255.0
+no shutdown
+```
+
+### Serial DCE
+
+```bash
+int s0/0/0
+ip address 10.1.1.2 255.255.255.252
+clock rate 128000 # do only on DCE side
 no shutdown
 ```
 
