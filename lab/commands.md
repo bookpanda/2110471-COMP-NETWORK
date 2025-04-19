@@ -149,7 +149,7 @@ ip route 0.0.0.0 0.0.0.0 s0/0/1
 
 ```
 
-### OSPF
+# OSPF
 
 ```bash
 # enable OSPF on router
@@ -169,8 +169,33 @@ show ip protocols
 show ip ospf
 # detail + cost
 show ip ospf interface
-
 ```
+
+## Router ID
+
+order of finding router ID:
+
+1. IP addr configured with router-id
+
+```bash
+router ospf 1
+router-id 11.11.11.11
+end
+clear ip ospf process
+```
+
+2. highest IP addr of loopback interface
+
+```bash
+interface lo0
+ip address 1.1.1.1 255.255.255.255
+end
+reload # must reload to take effect
+```
+
+## Passive Interface
+
+3. highest active IP addr of any interface
 
 # Tips
 
