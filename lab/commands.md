@@ -169,6 +169,7 @@ show ip protocols
 show ip ospf
 # detail + cost
 show ip ospf interface
+show ip ospf interface s0/0/0
 ```
 
 ## Router ID
@@ -193,9 +194,25 @@ end
 reload # must reload to take effect
 ```
 
+3. highest active IP addr of any interface
+
 ## Passive Interface
 
-3. highest active IP addr of any interface
+prevent OSPF from sending hello packets on an interface
+
+```bash
+show ip ospf interface g0/0 # Hello due
+router ospf 1
+passive-interface g0/0
+end
+show ip ospf interface g0/0 # no Hello
+
+# R2
+passive-interface default # all interfaces passive
+# R1: when R2 dead timer expires, R1 will remove R2 from its OSPF neighbor table
+# R1, R3 no longer have a route passing through R2 subnet
+show ip ospf neighbor
+```
 
 # Tips
 
@@ -238,3 +255,7 @@ reload # must reload to take effect
 
 -   default gateway is the IP address of the router's interface on that local network
 -   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
+
+```
+
+```
