@@ -117,8 +117,8 @@ no shutdown
 
 ## Wiring
 
--   Copper straight: different devices (switch to router, PC to switch)
--   Copper crossover: same devices (switch to switch, router to router)
+-   Copper straight: PC <-> switch, router <-> switch
+-   Copper crossover: same devices or PC <-> router
 -   connecting remote access
     -   wire console cable from PC's RS 232 to router's console port
     -   enter PC's terminal, can now access switch's terminal
@@ -139,4 +139,3 @@ no shutdown
 
 -   default gateway is the IP address of the router's interface on that local network
 -   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
-    l
