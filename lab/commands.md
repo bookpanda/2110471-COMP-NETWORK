@@ -46,6 +46,10 @@ no ip domain-lookup
 enable secret class
 line con 0
 password cisco
+# log out after 5 minutes of inactivity
+exec-timeout 5 0
+# make system message come after your input
+logging synchronous
 login
 exit
 
@@ -56,9 +60,11 @@ login
 end
 # now PC can telnet 192.168.1.2 (vlan ip of switch)
 
+# set password encryption
+service password-encryption
+
 # banner
-banner motd #
-Unauthorized access is strictly prohibited and prosecuted to the full extent of the law. #
+banner motd #Unauthorized access prohibited#
 
 interface vlan1
 ip address 192.168.1.2 255.255.255.0
@@ -118,3 +124,9 @@ ipconfig /all
 ### PC
 
 -   Desktop >> IP Configuration >> IP address, subnet mask, default gateway
+
+### Router
+
+-   default gateway is the IP address of the router's interface on that local network
+-   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
+    l
