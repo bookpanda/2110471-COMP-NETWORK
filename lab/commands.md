@@ -119,7 +119,8 @@ no shutdown
 
 -   Copper straight: PC <-> switch, router <-> switch
 -   Copper crossover: same devices or PC <-> router
--   connecting remote access
+-   Serial DCE: add HWIC-2T to router
+-   connecting remote accessp
     -   wire console cable from PC's RS 232 to router's console port
     -   enter PC's terminal, can now access switch's terminal
 
