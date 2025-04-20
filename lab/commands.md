@@ -235,6 +235,11 @@ ip ospf cost 1565
 
 -   doesn't have power switch
 -   every port initially belongs to VLAN 1 (default VLAN)
+-   devices on different VLAN (10 vs 20) can't ping each other
+-   S1 can't ping S2 when IP is on VLAN99, which has no ports assigned to it
+-   when VLAN is deleted, all ports assigned to it are moved to VLAN 1
+
+## VLAN
 
 ```bash
 # give vlan interface addr
@@ -248,13 +253,18 @@ shutdown
 
 # create vlans, assign switch ports
 vlan 10 # create vlan with id 10 with name "Student"
+no vlan 30 # remove vlan 30
 name Student
 show vlan # show vlans and their ports
 
 # assign vlan to port (interface)
-interface f0/6
+interface f0/6 # to assign many interfaces, use interface range f0/11-24
 switchport mode access
 switchport access vlan 10
+# remove vlan from port
+interface f0/24
+no switchport access vlan
+show vlan brief
 
 # move switch's ip to vlan 99 (vlan 1 is connected to all ports, management traffic e.g. SSH to switch via IP should be on management vlan, convention is 99)
 interface vlan 1
@@ -262,7 +272,12 @@ no ip address
 interface vlan 99
 ip address 192.168.1.11 255.255.255.0
 end
-show vlan brief
+
+# 802.1Q Trunk between switches, trunk port allows multiple VLANs to pass through single physical link
+# convert port to trunk port, that port won't show in show vlan brief
+int f0/1 # on S1
+switchport mode dynamic desirable # f0/1 on both S1, S2 become trunk ports
+show interfaces trunk # S1 f0/1: desirable, S2 f0/1: auto
 ```
 
 ## Wiring
