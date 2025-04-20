@@ -144,7 +144,7 @@ ip route 0.0.0.0 0.0.0.0 s0/0/1
 
 ```
 
-# OSPF
+## OSPF
 
 ```bash
 # enable OSPF on router
@@ -167,7 +167,7 @@ show ip ospf interface
 show ip ospf interface s0/0/0
 ```
 
-## Router ID
+### Router ID
 
 order of finding router ID:
 
@@ -191,7 +191,7 @@ reload # must reload to take effect
 
 3. highest active IP addr of any interface
 
-## Passive Interface
+### Passive Interface
 
 prevent OSPF from sending hello packets on an interface
 
@@ -213,7 +213,7 @@ router ospf 1
 no passive-interface s0/0/0
 ```
 
-## Change OSPF metrics
+### Change OSPF metrics
 
 ```bash
 # change OSPF cost
@@ -229,6 +229,45 @@ show ip route ospf # some best route will change
 # change ospf cost directly
 interface s0/0/1
 ip ospf cost 1565
+```
+
+## DHCP
+
+```bash
+# config routing, choose networks to advertise
+# R1
+router rip
+version 2
+network 192.168.0.0 # add adjacent networks to router
+network 192.168.1.0
+network 192.168.2.252
+no auto-summary # advertise the subnet, mask as-is
+
+# R1
+router rip
+version 2
+network 192.168.2.252
+default-information originate # share default routes to other routers
+exit
+ip route 0.0.0.0 0.0.0.0 209.165.200.225 # default route to the internet
+
+# ISP router: share to 192.168.0.0/22 network
+ip route 192.168.0.0 255.255.252.0 209.165.200.226
+
+# make R2 DHCP server
+# R2: don't lease ip from 192.168.0.1 - 192.168.0.9 e.g. they're for static ip, interface ip
+ip dhcp excluded-address 192.168.0.1 192.168.0.9
+# create DHCP pool R1G0 for 192.168.0.0/24 network
+ip dhcp pool R1G0
+network 192.168.0.0 255.255.255.0
+default-router 192.168.0.1 # router is g0/0 of R1
+dns-server 209.165.200.225 # s0/0/1 of ISP router
+# repeat for 192.168.1.0/24 network
+
+# make R1 DHCP relay agent so that DHCP requests from PC-A can be forwarded to R2
+int g0/0
+ip helper-address 192.168.2.254 # R2's g0/0
+# PC: IP config >> check DHCP, PC-A will get first available IP from DHCP server (192.168.0.10)
 ```
 
 # Switch
