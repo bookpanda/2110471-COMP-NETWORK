@@ -18,9 +18,6 @@ show interfaces fastEthernet 0/5
 
 # show IP routes of interfaces (router only)
 show ip route
-
-show ip nat translations
-show ip nat statistics
 ```
 
 ## Setup
@@ -323,6 +320,27 @@ show interfaces trunk # S1 f0/1: desirable, S2 f0/1: auto
 # manually config trunk port (not all devices support DTP)
 int f0/1
 switchport mode trunk
+```
+
+## NAT
+
+### Static mapping
+
+```bash
+# Gateway router
+ip nat inside source static 192.168.1.20 209.165.200.225 # PC-A ip -> public ip
+int g0/1
+ip nat inside # g0/1 is private side
+int s0/0/1
+ip nat outside # s0/0/1 is public side
+show ip nat translations
+show ip nat statistics
+```
+
+### Dynamic mapping (NAT Pool)
+
+```bash
+
 ```
 
 ## Wiring
