@@ -335,12 +335,18 @@ int s0/0/1
 ip nat outside # s0/0/1 is public side
 show ip nat translations
 show ip nat statistics
+clear ip nat translation * # clear all NAT translations in the table
+no ip nat inside source static 192.168.1.20 209.165.200.225 # remove static mapping
 ```
 
 ### Dynamic mapping (NAT Pool)
 
 ```bash
-
+# create ACL for 192.168.1.0/24 subnet
+access-list 1 permit 192.168.1.0 0.0.0.255
+# create NAT pool from 209.165.200.242 to 209.165.200.254 with mask
+ip nat pool public_access 209.165.200.242 209.165.200.254 netmask 255.255.255.224
+ip nat inside source list 1 pool public_access
 ```
 
 ## Wiring
