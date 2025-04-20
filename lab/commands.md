@@ -76,20 +76,20 @@ copy running-config startup-config
 show running-config
 ```
 
-## PC
+# PC
 
 ```bash
 # show ip configuration
 ipconfig /all
 ```
 
-## Router
+# Router
 
 ```bash
 clock set 17:00:00 18 Feb 2013
 ```
 
-### GigabitEthernet
+## GigabitEthernet
 
 ```bash
 int g0/0
@@ -99,7 +99,7 @@ ip address 192.168.0.1 255.255.255.0
 no shutdown
 ```
 
-### Serial DCE
+## Serial DCE
 
 -   even after DCE ip config, PC cannot ping stuff cross DCE (the router doesn't have routes to distant networks)
 
@@ -110,14 +110,14 @@ clock rate 128000 # do only on DCE side
 no shutdown
 ```
 
-### Loopback
+## Loopback
 
 ```bash
 interface Loopback0
 ip address 198.133.219.1 255.255.255.0
 ```
 
-### Static Route
+## Static Route
 
 ```bash
 # recursive static route on R1
@@ -141,7 +141,7 @@ ip route 198.133.219.0 255.255.255.0 S0/0/1 # this router side
 ip route 198.133.219.0 255.255.255.0 10.1.1.2 # dest router side
 ```
 
-### Default Route
+## Default Route
 
 ```bash
 ip route 0.0.0.0 0.0.0.0 s0/0/1
@@ -236,6 +236,22 @@ interface s0/0/1
 ip ospf cost 1565
 ```
 
+# Switch
+
+```bash
+# give vlan interface addr
+interface vlan 1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+
+# deactivate range of interface
+interface range f0/2-5, f0/7-24, g0/1-2
+shutdown
+
+# create vlans, assign switch ports
+
+```
+
 # Tips
 
 1. you do not need to assign an IP to the switch interface itself for the PC to ping the router as long as:
@@ -277,7 +293,3 @@ ip ospf cost 1565
 
 -   default gateway is the IP address of the router's interface on that local network
 -   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
-
-```
-
-```
