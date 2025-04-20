@@ -278,8 +278,12 @@ end
 # 802.1Q Trunk between switches, trunk port allows multiple VLANs to pass through single physical link
 # convert port to trunk port, that port won't show in show vlan brief
 int f0/1 # on S1
-switchport mode dynamic desirable # f0/1 on both S1, S2 become trunk ports
+switchport mode dynamic desirable # use DTP, f0/1 on both S1, S2 become trunk ports
 show interfaces trunk # S1 f0/1: desirable, S2 f0/1: auto
+
+# manually config trunk port (not all devices support DTP)
+int f0/1
+switchport mode trunk
 ```
 
 ## Wiring
