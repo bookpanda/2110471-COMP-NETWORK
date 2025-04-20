@@ -235,9 +235,11 @@ ip ospf cost 1565
 
 -   doesn't have power switch
 -   every port initially belongs to VLAN 1 (default VLAN)
--   devices on different VLAN (10 vs 20) can't ping each other
--   S1 can't ping S2 when IP is on VLAN99, which has no ports assigned to it
 -   when VLAN is deleted, all ports assigned to it are moved to VLAN 1
+-   devices on different VLANs (10 vs 20) can't ping each other
+-   devices on the same VLAN but different switch need trunk port to ping each other
+-   S1 can't ping S2 when IP is on VLAN99, which has no ports assigned to it
+-   if S1, S2 have trunk ports, they can ping each other (their IPs are both on VLAN99)
 
 ## VLAN
 
