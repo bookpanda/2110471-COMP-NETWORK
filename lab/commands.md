@@ -4,15 +4,8 @@
 # turn on interfaces that are administratively down
 no shutdown
 
-# set clock rate on DCE side
-clock rate 128000
-
 ping 192.168.1.11
-```
 
-## Show
-
-```bash
 # display IOS version
 show version
 
@@ -78,12 +71,17 @@ show running-config
 
 # PC
 
+-   Desktop >> IP Configuration >> IP address, subnet mask, default gateway
+
 ```bash
 # show ip configuration
 ipconfig /all
 ```
 
 # Router
+
+-   default gateway is the IP address of the router's interface on that local network
+-   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
 
 ```bash
 clock set 17:00:00 18 Feb 2013
@@ -238,6 +236,8 @@ ip ospf cost 1565
 
 # Switch
 
+-   doesn't have power switch
+
 ```bash
 # give vlan interface addr
 interface vlan 1
@@ -249,8 +249,19 @@ interface range f0/2-5, f0/7-24, g0/1-2
 shutdown
 
 # create vlans, assign switch ports
-
+vlan 10 # create vlan with id 10 with name "Student"
+name Student
+show vlan
 ```
+
+## Wiring
+
+-   Copper straight: PC <-> switch, router <-> switch
+-   Copper crossover: same devices or PC <-> router
+-   Serial DCE: add HWIC-2T to router
+-   connecting remote access
+    -   wire console cable from PC's RS 232 to router's console port
+    -   enter PC's terminal, can now access switch's terminal
 
 # Tips
 
@@ -265,31 +276,3 @@ shutdown
 -   ctrl+shift+6: interrupt e.g. Translating "ip"...domain server
 -   ?: help
 -   tab: auto-complete
-
-# Hardware
-
-## Wiring
-
--   Copper straight: PC <-> switch, router <-> switch
--   Copper crossover: same devices or PC <-> router
--   Serial DCE: add HWIC-2T to router
--   connecting remote accessp
-    -   wire console cable from PC's RS 232 to router's console port
-    -   enter PC's terminal, can now access switch's terminal
-
-## Devices
-
--   can ping other devices in same network
-
-### Switch
-
--   doesn't have power switch
-
-### PC
-
--   Desktop >> IP Configuration >> IP address, subnet mask, default gateway
-
-### Router
-
--   default gateway is the IP address of the router's interface on that local network
--   GigabitEthernet IP = default gateway IP (first usable ip in the network after the network ip)
