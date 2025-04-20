@@ -9,9 +9,6 @@ ping 192.168.1.11
 # display IOS version
 show version
 
-# show vlans and their ports
-show vlan
-
 show ip interface
 # show all interfaces with IP (if vlan has IP, it will show up here)
 show ip interface brief
@@ -237,6 +234,7 @@ ip ospf cost 1565
 # Switch
 
 -   doesn't have power switch
+-   every port initially belongs to VLAN 1 (default VLAN)
 
 ```bash
 # give vlan interface addr
@@ -251,7 +249,20 @@ shutdown
 # create vlans, assign switch ports
 vlan 10 # create vlan with id 10 with name "Student"
 name Student
-show vlan
+show vlan # show vlans and their ports
+
+# assign vlan to port (interface)
+interface f0/6
+switchport mode access
+switchport access vlan 10
+
+# move switch's ip to vlan 99 (vlan 1 is connected to all ports, management traffic e.g. SSH to switch via IP should be on management vlan, convention is 99)
+interface vlan 1
+no ip address
+interface vlan 99
+ip address 192.168.1.11 255.255.255.0
+end
+show vlan brief
 ```
 
 ## Wiring
